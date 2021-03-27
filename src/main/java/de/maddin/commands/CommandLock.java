@@ -1,0 +1,48 @@
+package de.maddin.commands;
+
+import org.bukkit.GameRule;
+import org.bukkit.World;
+import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
+
+import static de.maddin.Utils.getAllWorlds;
+import static de.maddin.Utils.getWorldOfSender;
+
+public class CommandLock {
+
+    public static final String NAME = "lock";
+
+    private CommandLock() {}
+
+    public static boolean run(@NotNull CommandSender sender, @NotNull String[] args) {
+
+        List<World> worldsToLock;
+        if (args.length == 1) {
+            worldsToLock = Collections.singletonList(getWorldOfSender(sender));
+
+        } else {
+            String worldToChangeArg = args[1];
+            if (worldToChangeArg.equals("all")) {
+                worldsToLock = getAllWorlds(sender);
+
+            } else {
+                World world = sender.getServer().getWorld(worldToChangeArg);
+                if (world != null) {
+                    worldsToLock = Collections.singletonList(world);
+                } else {
+                    sender.sendMessage("Invalid world.");
+                    return false;
+                }
+            }
+        }
+
+        for (World world : worldsToLock) {
+            world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
+            sender.sendMessage("Locked time in world " + world.getName() + ".");
+        }
+        return true;
+    }
+}
