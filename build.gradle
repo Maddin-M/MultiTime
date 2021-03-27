@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'de.maddin'
-version '1.0'
+version '1.0.1'
 
 repositories {
     mavenCentral()
@@ -21,7 +21,7 @@ dependencies {
 
 jar {
     destinationDirectory = file("/out")
-    archiveFileName = project.name + "-" +project.version + ".jar"
+    archiveFileName = project.name + "-" + project.version + ".jar"
 
     from {
         configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }

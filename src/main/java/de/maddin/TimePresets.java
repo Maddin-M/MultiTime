@@ -1,9 +1,5 @@
 package de.maddin;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
 public enum TimePresets {
 
     DAY(1000), NOON(6000), NIGHT(13000), MIDNIGHT(18000);
@@ -18,10 +14,13 @@ public enum TimePresets {
         return ticks;
     }
 
-    public static List<String> getAllNames() {
-        return Arrays
-                .stream(TimePresets.values())
-                .map(e -> e.name().toLowerCase())
-                .collect(Collectors.toList());
+    public static boolean contains(String test) {
+
+        for (TimePresets t : TimePresets.values()) {
+            if (t.name().equalsIgnoreCase(test)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

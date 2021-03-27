@@ -24,14 +24,14 @@ public class CommandSet {
             sender.sendMessage("Must enter time to set.");
             return false;
         }
-        String newTimeArg = args[1].toLowerCase();
+        String newTimeArg = args[1];
 
         int newTime;
         if (isValidTickAmount(newTimeArg)) {
             newTime = Integer.parseInt(newTimeArg) % 24000;
 
-        } else if (TimePresets.getAllNames().contains(newTimeArg)) {
-            newTime = TimePresets.valueOf(newTimeArg).getTicks();
+        } else if (TimePresets.contains(newTimeArg)) {
+            newTime = TimePresets.valueOf(newTimeArg.toUpperCase()).getTicks();
 
         } else {
             sender.sendMessage("Invalid time.");
