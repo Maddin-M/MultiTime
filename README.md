@@ -7,7 +7,13 @@ Minecraft Server plugin for world specific time utilities
 
 A simple Plugin to set, get, lock and unlock time per world. Because when using Multiverse, the default `/time` command affects all worlds.
 
-### Usage:
+Download
+---
+
+[Download latest release here](https://www.spigotmc.org/resources/multitime.90642/)
+
+Usage
+---
 
 `/time set {0-24000/day/noon/night/midnight} {world/all}`  
 `/time get {world/all}`  
@@ -16,6 +22,7 @@ A simple Plugin to set, get, lock and unlock time per world. Because when using 
 
 The world parameter is always optional and defaults to the world the player is currently in.
 
-### Permissions:
+Permissions
+---
 
 `multitime.admin`
