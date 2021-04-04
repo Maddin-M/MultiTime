@@ -1,5 +1,6 @@
 package de.maddin;
 
+import org.bukkit.ChatColor;
 import org.bukkit.GameRule;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -33,9 +34,17 @@ public class Utils {
     }
 
     public static String getTimeLockedMessage(World world) {
-        if (Boolean.FALSE.equals(world.getGameRuleValue(GameRule.DO_DAYLIGHT_CYCLE))) {
-            return "Time is locked in this world.";
+        if (isTimeLockedInWorld(world)) {
+            return " &eTime is locked in this world.";
         }
         return "";
+    }
+
+    public static boolean isTimeLockedInWorld(World world) {
+        return Boolean.FALSE.equals(world.getGameRuleValue(GameRule.DO_DAYLIGHT_CYCLE));
+    }
+
+    public static String colorString(String s) {
+        return ChatColor.translateAlternateColorCodes('&', s);
     }
 }

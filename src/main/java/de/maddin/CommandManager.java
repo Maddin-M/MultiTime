@@ -1,9 +1,5 @@
 package de.maddin;
 
-import de.maddin.commands.CommandGet;
-import de.maddin.commands.CommandLock;
-import de.maddin.commands.CommandSet;
-import de.maddin.commands.CommandUnlock;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -13,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import static de.maddin.Constants.COMMAND;
 import static de.maddin.Constants.VERSION;
+import static java.lang.String.format;
 
 public class CommandManager implements CommandExecutor {
 
@@ -37,21 +34,11 @@ public class CommandManager implements CommandExecutor {
         if (command.getName().equalsIgnoreCase(COMMAND)) {
 
             if (args.length == 0) {
-                sender.sendMessage(plugin.getName() + " " + VERSION);
+                sender.sendMessage(format("%s %s", plugin.getName(), VERSION));
                 return true;
-
-            } else if (args[0].equals(CommandSet.NAME)) {
-                return CommandSet.run(sender, args);
-
-            } else if (args[0].equals(CommandGet.NAME)) {
-                return CommandGet.run(sender, args);
-
-            } else if (args[0].equals(CommandLock.NAME)) {
-                return CommandLock.run(sender, args);
-
-            } else if (args[0].equals(CommandUnlock.NAME)) {
-                return CommandUnlock.run(sender, args);
             }
+
+            return Commands.execute(sender, args);
         }
         return false;
     }

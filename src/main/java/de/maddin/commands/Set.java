@@ -8,20 +8,23 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.List;
 
-import static de.maddin.Utils.getAllWorlds;
-import static de.maddin.Utils.getWorldOfSender;
-import static de.maddin.Utils.isValidTickAmount;
+import static de.maddin.Constants.COMMAND;
+import static de.maddin.Utils.*;
+import static java.lang.String.format;
 
-public class CommandSet {
+public class Set implements Command {
 
-    public static final String NAME = "set";
+    private static final Set instance = new Set();
 
-    private CommandSet() {}
+    public static Set getInstance() {
+        return instance;
+    }
 
-    public static boolean run(@NotNull CommandSender sender, @NotNull String[] args) {
+    @Override
+    public boolean run(@NotNull CommandSender sender, @NotNull String[] args) {
 
         if (args.length == 1) {
-            sender.sendMessage("Must enter time to set.");
+            sender.sendMessage(colorString("&cMust enter time to set."));
             return false;
         }
         String newTimeArg = args[1];
@@ -34,7 +37,7 @@ public class CommandSet {
             newTime = TimePresets.valueOf(newTimeArg.toUpperCase()).getTicks();
 
         } else {
-            sender.sendMessage("Invalid time.");
+            sender.sendMessage(colorString(format("&c'%s' is not a valid time.", newTimeArg)));
             return false;
         }
 
@@ -43,16 +46,16 @@ public class CommandSet {
             worldsToSet = Collections.singletonList(getWorldOfSender(sender));
 
         } else {
-            String worldToChangeArg = args[2];
-            if (worldToChangeArg.equals("all")) {
+            String worldArg = args[2];
+            if (worldArg.equals("all")) {
                 worldsToSet = getAllWorlds(sender);
 
             } else {
-                World world = sender.getServer().getWorld(worldToChangeArg);
+                World world = sender.getServer().getWorld(worldArg);
                 if (world != null) {
                     worldsToSet = Collections.singletonList(world);
                 } else {
-                    sender.sendMessage("Invalid world.");
+                    sender.sendMessage(colorString(format("&cWorld '%s' doesn't exist!", worldArg)));
                     return false;
                 }
             }
@@ -60,9 +63,16 @@ public class CommandSet {
 
         for (World world : worldsToSet) {
             world.setTime(newTime);
-            sender.sendMessage("Set time in " + world.getName() + " to " + newTime + " ticks.");
+            sender.sendMessage(colorString(format("Set time in &b%s&f to &b%d&f ticks.", world.getName(), newTime)));
         }
 
         return true;
+    }
+
+    @Override
+    public String getHelp() {
+        return colorString(
+                format("&b/%s set &8[&e0-24000&8|&eday&8|&enoon&8|&enight&8|&emidnight&8] [&eworld&8|&eall&8]",
+                        COMMAND));
     }
 }

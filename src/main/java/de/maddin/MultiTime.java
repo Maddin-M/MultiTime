@@ -1,10 +1,13 @@
 package de.maddin;
 
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+
+import static de.maddin.Constants.PLUGIN_ID;
 
 public class MultiTime extends JavaPlugin {
 
@@ -13,12 +16,14 @@ public class MultiTime extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        MultiTime.instance = this;
+        instance = this;
         commandManager = new CommandManager();
         commandManager.setup();
 
         getConfig().options().copyDefaults(true);
         saveDefaultConfig();
+        new Metrics(this, PLUGIN_ID);
+
         Bukkit.getLogger().info("SetWorldTime enabled");
     }
 

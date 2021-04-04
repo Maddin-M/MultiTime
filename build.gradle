@@ -1,9 +1,10 @@
 plugins {
     id 'java'
+    id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
 
 group 'de.maddin'
-version '1.0.1'
+version '1.0.2'
 
 repositories {
     mavenCentral()
@@ -14,20 +15,25 @@ repositories {
 
 dependencies {
     compileOnly 'com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT'
+    implementation 'org.bstats:bstats-bukkit:2.2.1'
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+
+    testImplementation 'org.mockito:mockito-core:3.8.0'
+    testImplementation("org.assertj:assertj-core:3.11.1")
 }
 
-jar {
-    destinationDirectory = file("/out")
-    archiveFileName = project.name + "-" + project.version + ".jar"
-
-    from {
-        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-    }
+shadowJar {
+    dependsOn 'test'
+    archiveClassifier.set('')
+    relocate 'org.bstats', 'de.maddin'
 }
 
 test {
     useJUnitPlatform()
+}
+
+configurations {
+    testImplementation.extendsFrom compileOnly
 }
