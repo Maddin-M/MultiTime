@@ -8,15 +8,15 @@ import org.bukkit.command.PluginCommand;
 import org.jetbrains.annotations.NotNull;
 
 import static de.maddin.Constants.COMMAND;
-import static de.maddin.Constants.VERSION;
+import static de.maddin.Utils.getVersion;
 import static java.lang.String.format;
 
 public class CommandManager implements CommandExecutor {
 
     private final MultiTime plugin;
 
-    public CommandManager() {
-        plugin = MultiTime.getInstance();
+    public CommandManager(MultiTime plugin) {
+        this.plugin = plugin;
     }
 
     public void setup() {
@@ -34,7 +34,7 @@ public class CommandManager implements CommandExecutor {
         if (command.getName().equalsIgnoreCase(COMMAND)) {
 
             if (args.length == 0) {
-                sender.sendMessage(format("%s %s", plugin.getName(), VERSION));
+                sender.sendMessage(format("%s %s", plugin.getName(), getVersion(plugin)));
                 return true;
             }
 

@@ -47,4 +47,8 @@ public class Utils {
     public static String colorString(String s) {
         return ChatColor.translateAlternateColorCodes('&', s);
     }
+
+    public static String getVersion(MultiTime plugin) {
+        return plugin.getDescription().getVersion();
+    }
 }

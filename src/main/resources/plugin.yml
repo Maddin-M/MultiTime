@@ -1,10 +1,10 @@
 main: de.maddin.MultiTime
-version: "1.0.2"
+version: 1.0.3
 name: MultiTime
 prefix: MultiTime
 api-version: 1.16
 authors: [Maddin]
-description: This plugin lets you set the time per world.
+description: World specific time utilities
 
 commands:
   time:
