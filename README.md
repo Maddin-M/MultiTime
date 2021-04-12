@@ -27,3 +27,9 @@ Permissions
 ---
 
 `multitime.admin` for all commands (default for ops)
+
+Other
+---
+
+- Tested on [PaperMC](https://papermc.io/downloads)
+- [bStats](https://bstats.org/plugin/bukkit/MultiTime/10918)
