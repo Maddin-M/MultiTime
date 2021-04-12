@@ -1,6 +1,6 @@
-package de.maddin.commands;
+package de.maddin.multitime.commands;
 
-import de.maddin.TimePresets;
+import de.maddin.multitime.TimePresets;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
@@ -8,17 +8,18 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.List;
 
-import static de.maddin.Constants.COMMAND;
-import static de.maddin.Utils.*;
+import static de.maddin.multitime.Constants.COMMAND;
+import static de.maddin.multitime.Utils.colorString;
+import static de.maddin.multitime.Utils.convertToRealTicks;
+import static de.maddin.multitime.Utils.getAllWorlds;
+import static de.maddin.multitime.Utils.getWorldOfSender;
+import static de.maddin.multitime.Utils.isValidTickAmount;
 import static java.lang.String.format;
 
+/**
+ * Sets the time in a specific world or all worlds.
+ */
 public class Set implements Command {
-
-    private static final Set instance = new Set();
-
-    public static Set getInstance() {
-        return instance;
-    }
 
     @Override
     public boolean run(@NotNull CommandSender sender, @NotNull String[] args) {
@@ -31,7 +32,7 @@ public class Set implements Command {
 
         int newTime;
         if (isValidTickAmount(newTimeArg)) {
-            newTime = Integer.parseInt(newTimeArg) % 24000;
+            newTime = convertToRealTicks(Integer.parseInt(newTimeArg));
 
         } else if (TimePresets.contains(newTimeArg)) {
             newTime = TimePresets.valueOf(newTimeArg.toUpperCase()).getTicks();
@@ -72,7 +73,7 @@ public class Set implements Command {
     @Override
     public String getHelp() {
         return colorString(
-                format("&b/%s set &8[&e0-24000&8|&eday&8|&enoon&8|&enight&8|&emidnight&8] [&eworld&8|&eall&8]",
+                format("&b/%s set &8[&eticks&8|&eday&8|&enoon&8|&enight&8|&emidnight&8] [&eworld&8|&eall&8]",
                         COMMAND));
     }
 }

@@ -1,5 +1,8 @@
-package de.maddin;
+package de.maddin.multitime;
 
+/**
+ * This class holds the named time parameters and its values.
+ */
 public enum TimePresets {
 
     DAY(1000), NOON(6000), NIGHT(13000), MIDNIGHT(18000);

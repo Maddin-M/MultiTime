@@ -1,6 +1,6 @@
 package commands;
 
-import de.maddin.commands.Set;
+import de.maddin.multitime.commands.Set;
 import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -15,7 +15,11 @@ import static java.lang.String.valueOf;
 import static main.TestUtils.TEST_NAME;
 import static main.TestUtils.TEST_TIME;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class SetTest {
@@ -53,16 +57,34 @@ class SetTest {
     @Test
     void valid_time_parameter_should_set_current_world_time() {
 
-        String[] args = new String[]{"set", valueOf(TEST_TIME)};
+        String[] args1 = new String[]{"set", "1000"};
+        String[] args2 = new String[]{"set", "26000"};
+        String[] args3 = new String[]{"set", "-1000"};
+        String[] args4 = new String[]{"set", "-26000"};
 
-        boolean result = setTest.run(playerMock, args);
-        assertThat(result).isTrue();
+        boolean result1 = setTest.run(playerMock, args1);
+        boolean result2 = setTest.run(playerMock, args2);
+        boolean result3 = setTest.run(playerMock, args3);
+        boolean result4 = setTest.run(playerMock, args4);
+        assertThat(result1).isTrue();
+        assertThat(result2).isTrue();
+        assertThat(result3).isTrue();
+        assertThat(result4).isTrue();
 
-        verify(playerMock).getWorld();
-        verify(worldMock).setTime(TEST_TIME);
-        verify(worldMock).getName();
+        verify(playerMock, times(4)).getWorld();
+        verify(worldMock, times(4)).getName();
+        verify(worldMock).setTime(1000L);
+        verify(worldMock).setTime(2000L);
+        verify(worldMock).setTime(23000L);
+        verify(worldMock).setTime(22000L);
         verify(playerMock).sendMessage(
-                format("Set time in \u00A7b%s\u00A7f to \u00A7b%d\u00A7f ticks.", TEST_NAME, TEST_TIME));
+                format("Set time in \u00A7b%s\u00A7f to \u00A7b%d\u00A7f ticks.", TEST_NAME, 1000L));
+        verify(playerMock).sendMessage(
+                format("Set time in \u00A7b%s\u00A7f to \u00A7b%d\u00A7f ticks.", TEST_NAME, 2000L));
+        verify(playerMock).sendMessage(
+                format("Set time in \u00A7b%s\u00A7f to \u00A7b%d\u00A7f ticks.", TEST_NAME, 23000L));
+        verify(playerMock).sendMessage(
+                format("Set time in \u00A7b%s\u00A7f to \u00A7b%d\u00A7f ticks.", TEST_NAME, 22000L));
         verifyNoMoreInteractions(playerMock, worldMock, serverMock);
     }
 
@@ -84,11 +106,11 @@ class SetTest {
         assertThat(result4).isTrue();
 
         verify(playerMock, times(4)).getWorld();
+        verify(worldMock, times(4)).getName();
         verify(worldMock).setTime(1000);
         verify(worldMock).setTime(6000);
         verify(worldMock).setTime(13000);
         verify(worldMock).setTime(18000);
-        verify(worldMock, times(4)).getName();
         verify(playerMock).sendMessage(
                 format("Set time in \u00A7b%s\u00A7f to \u00A7b%d\u00A7f ticks.", TEST_NAME, 1000));
         verify(playerMock).sendMessage(

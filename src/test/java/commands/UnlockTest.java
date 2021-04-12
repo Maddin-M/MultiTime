@@ -1,6 +1,6 @@
 package commands;
 
-import de.maddin.commands.Unlock;
+import de.maddin.multitime.commands.Unlock;
 import org.bukkit.GameRule;
 import org.bukkit.Server;
 import org.bukkit.World;
@@ -15,8 +15,11 @@ import static java.lang.String.format;
 import static main.TestUtils.TEST_NAME;
 import static main.TestUtils.TEST_TIME;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class UnlockTest {

@@ -1,4 +1,4 @@
-package de.maddin.commands;
+package de.maddin.multitime.commands;
 
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -7,20 +7,17 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.List;
 
-import static de.maddin.Constants.COMMAND;
-import static de.maddin.Utils.colorString;
-import static de.maddin.Utils.getAllWorlds;
-import static de.maddin.Utils.getTimeLockedMessage;
-import static de.maddin.Utils.getWorldOfSender;
+import static de.maddin.multitime.Constants.COMMAND;
+import static de.maddin.multitime.Utils.colorString;
+import static de.maddin.multitime.Utils.getAllWorlds;
+import static de.maddin.multitime.Utils.getTimeLockedMessage;
+import static de.maddin.multitime.Utils.getWorldOfSender;
 import static java.lang.String.format;
 
+/**
+ * Command to get the time from a certain world or all worlds.
+ */
 public class Get implements Command {
-
-    private static final Get instance = new Get();
-
-    public static Get getInstance() {
-        return instance;
-    }
 
     @Override
     public boolean run(@NotNull CommandSender sender, @NotNull String[] args) {

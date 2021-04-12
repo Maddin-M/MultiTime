@@ -1,4 +1,4 @@
-package de.maddin;
+package de.maddin.multitime;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -7,10 +7,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
 import org.jetbrains.annotations.NotNull;
 
-import static de.maddin.Constants.COMMAND;
-import static de.maddin.Utils.getVersion;
+import static de.maddin.multitime.Constants.COMMAND;
+import static de.maddin.multitime.Utils.getVersion;
 import static java.lang.String.format;
 
+/**
+ * This class sends the command with its args to the correct executor class.
+ */
 public class CommandManager implements CommandExecutor {
 
     private final MultiTime plugin;
@@ -29,13 +32,14 @@ public class CommandManager implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command,
+                             @NotNull String label, @NotNull String[] args) {
 
         if (command.getName().equalsIgnoreCase(COMMAND)) {
 
             if (args.length == 0) {
                 sender.sendMessage(format("%s %s", plugin.getName(), getVersion(plugin)));
-                return true;
+                return false;
             }
 
             return Commands.execute(sender, args);

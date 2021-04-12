@@ -1,4 +1,4 @@
-package de.maddin;
+package de.maddin.multitime;
 
 import org.bukkit.ChatColor;
 import org.bukkit.GameRule;
@@ -8,6 +8,9 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
+/**
+ * Utils class to hold all the ugly logic, i don't want to see in the command classes.
+ */
 public class Utils {
 
     private Utils() {}
@@ -31,6 +34,14 @@ public class Utils {
         } catch (NumberFormatException | NullPointerException e) {
             return false;
         }
+    }
+
+    public static int convertToRealTicks(int ticks) {
+        ticks %= 24000;
+        if (ticks < 0) {
+            ticks += 24000;
+        }
+        return ticks;
     }
 
     public static String getTimeLockedMessage(World world) {

@@ -1,7 +1,5 @@
-MultiTime
+MultiTime ![](https://tokei.rs/b1/github/Maddin-M/MultiTime?category=code) ![](https://img.shields.io/bstats/servers/10918) ![](https://img.shields.io/spiget/downloads/90642)
 =================
-![](https://tokei.rs/b1/github/Maddin-M/MultiTime?category=code)
-![](https://img.shields.io/bstats/servers/10918)
 
 Minecraft Server plugin for world specific time utilities
 
@@ -15,14 +13,17 @@ Download
 Usage
 ---
 
-`/time set {0-24000/day/noon/night/midnight} {world/all}`  
+`/time set {ticks/day/noon/night/midnight} {world/all}`  
+`/time add {ticks} {world/all}`  
 `/time get {world/all}`  
 `/time lock {world/all}`  
 `/time unlock {world/all}`
 
-The world parameter is always optional and defaults to the world the player is currently in.
+- The world parameter is always optional and defaults to the world the player is currently in.
+- You can subtract time by using `/time add` with a negative number
+- Locked worlds will still be affected by `/time set` or `/time add`
 
 Permissions
 ---
 
-`multitime.admin`
+`multitime.admin` for all commands (default for ops)

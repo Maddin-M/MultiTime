@@ -1,5 +1,5 @@
-main: de.maddin.MultiTime
-version: 1.0.3
+main: de.maddin.multitime.MultiTime
+version: 1.1.0
 name: MultiTime
 prefix: MultiTime
 api-version: 1.16
@@ -10,7 +10,7 @@ commands:
   time:
     description: Display/Change the world time. Defaults to current world.
     permission: multitime.admin
-    permission-message: You do not have permissions to use MultiTime!
+    permission-message: §cYou do not have permissions to use MultiTime!
     usage: §b/<command> help
 
 permissions:

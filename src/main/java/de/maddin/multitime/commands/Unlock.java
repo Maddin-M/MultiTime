@@ -1,4 +1,4 @@
-package de.maddin.commands;
+package de.maddin.multitime.commands;
 
 import org.bukkit.GameRule;
 import org.bukkit.World;
@@ -8,17 +8,17 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.List;
 
-import static de.maddin.Constants.COMMAND;
-import static de.maddin.Utils.*;
+import static de.maddin.multitime.Constants.COMMAND;
+import static de.maddin.multitime.Utils.colorString;
+import static de.maddin.multitime.Utils.getAllWorlds;
+import static de.maddin.multitime.Utils.getWorldOfSender;
+import static de.maddin.multitime.Utils.isTimeLockedInWorld;
 import static java.lang.String.format;
 
+/**
+ * Unlocks time in a specified world or all worlds.
+ */
 public class Unlock implements Command {
-
-    private static final Unlock instance = new Unlock();
-
-    public static Unlock getInstance() {
-        return instance;
-    }
 
     @Override
     public boolean run(@NotNull CommandSender sender, @NotNull String[] args) {

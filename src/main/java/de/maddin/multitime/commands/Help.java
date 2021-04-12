@@ -1,16 +1,13 @@
-package de.maddin.commands;
+package de.maddin.multitime.commands;
 
-import de.maddin.Commands;
+import de.maddin.multitime.Commands;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Displays all possible commands.
+ */
 public class Help implements Command {
-
-    private static final Help instance = new Help();
-
-    public static Help getInstance() {
-        return instance;
-    }
 
     @Override
     public boolean run(@NotNull CommandSender sender, @NotNull String[] args) {

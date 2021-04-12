@@ -1,14 +1,18 @@
 package commands;
 
-import de.maddin.Commands;
-import de.maddin.commands.Help;
+import de.maddin.multitime.Commands;
+import de.maddin.multitime.commands.Help;
 import org.bukkit.entity.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class HelpTest {
