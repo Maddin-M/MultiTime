@@ -60,6 +60,26 @@ class GetTest {
     }
 
     @Test
+    void locked_world_should_display_it() {
+
+        String[] args = new String[]{"get"};
+        when(worldMock.getGameRuleValue(GameRule.DO_DAYLIGHT_CYCLE)).thenReturn(false);
+
+        boolean result = getTest.run(playerMock, args);
+        assertThat(result).isTrue();
+
+        verify(playerMock).getWorld();
+        verify(worldMock).getGameRuleValue(GameRule.DO_DAYLIGHT_CYCLE);
+        verify(worldMock).getTime();
+        verify(worldMock).getName();
+        verify(worldMock).getGameRuleValue(GameRule.DO_DAYLIGHT_CYCLE);
+        verify(playerMock).sendMessage(
+                format("The time in \u00A7b%s\u00A7f is \u00A7b%d\u00A7f ticks. " +
+                        "\u00A7eTime is locked in this world.", TEST_NAME, TEST_TIME));
+        verifyNoMoreInteractions(playerMock, worldMock, serverMock);
+    }
+
+    @Test
     void valid_world_parameter_should_give_its_world_time() {
 
         String[] args = new String[]{"get", TEST_NAME};

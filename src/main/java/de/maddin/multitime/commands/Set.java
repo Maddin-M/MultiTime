@@ -1,6 +1,6 @@
 package de.maddin.multitime.commands;
 
-import de.maddin.multitime.TimePresets;
+import de.maddin.multitime.Constants;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
@@ -34,8 +34,8 @@ public class Set implements Command {
         if (isValidTickAmount(newTimeArg)) {
             newTime = convertToRealTicks(Integer.parseInt(newTimeArg));
 
-        } else if (TimePresets.contains(newTimeArg)) {
-            newTime = TimePresets.valueOf(newTimeArg.toUpperCase()).getTicks();
+        } else if (Constants.TimePresets.contains(newTimeArg)) {
+            newTime = Constants.TimePresets.valueOf(newTimeArg.toUpperCase()).getTicks();
 
         } else {
             sender.sendMessage(colorString(format("&c'%s' is not a valid time.", newTimeArg)));

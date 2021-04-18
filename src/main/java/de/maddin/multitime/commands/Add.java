@@ -59,13 +59,7 @@ public class Add implements Command {
         }
 
         for (World world : worldsToAddTime) {
-            world.setTime(convertToRealTicks((int) world.getTime() + timeToAdd));
-            if (timeToAdd >= 0) {
-                sender.sendMessage(colorString(format("Added &b%s&f ticks to &b%s&f.", timeToAdd, world.getName())));
-            } else {
-                sender.sendMessage(colorString(format("Subtracted &b%s&f ticks from &b%s&f.",
-                        abs(timeToAdd), world.getName())));
-            }
+            addTimeToWorld(world, sender, timeToAdd);
         }
 
         return true;
@@ -74,5 +68,16 @@ public class Add implements Command {
     @Override
     public String getHelp() {
         return colorString(format("&b/%s add &8[&eticks&8] [&eworld&8|&eall&8]", COMMAND));
+    }
+
+    private void addTimeToWorld(World world, CommandSender sender, int timeToAdd) {
+
+        world.setTime(convertToRealTicks((int) world.getTime() + timeToAdd));
+        if (timeToAdd >= 0) {
+            sender.sendMessage(colorString(format("Added &b%s&f ticks to &b%s&f.", timeToAdd, world.getName())));
+        } else {
+            sender.sendMessage(colorString(format("Subtracted &b%s&f ticks from &b%s&f.",
+                    abs(timeToAdd), world.getName())));
+        }
     }
 }

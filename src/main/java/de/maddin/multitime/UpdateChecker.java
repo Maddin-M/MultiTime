@@ -6,6 +6,7 @@ import org.bukkit.util.Consumer;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 import static de.maddin.multitime.Constants.SPIGOT_API_LINK;
@@ -34,7 +35,7 @@ public class UpdateChecker {
     public void getVersion(final Consumer<String> consumer) {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             try (InputStream inputStream = new URL(SPIGOT_API_LINK + SPIGOT_PLUGIN_ID).openStream();
-                 Scanner scanner = new Scanner(inputStream)) {
+                 Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8)) {
                 if (scanner.hasNext()) {
                     consumer.accept(scanner.next());
                 }
