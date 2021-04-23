@@ -4,7 +4,7 @@ MultiTime ![](https://tokei.rs/b1/github/Maddin-M/MultiTime?category=code) ![](h
 
 Minecraft Server plugin for world specific time utilities
 
-A simple Plugin to set, get, lock and unlock time per world. Because when using Multiverse, the default `/time` command affects all worlds.
+A simple Plugin to set, get, lock and unlock time per world. Because when using [Multiverse](https://github.com/Multiverse), the default `/time` command affects all worlds.
 
 Download
 ---
@@ -33,4 +33,5 @@ Other
 ---
 
 - Tested on [PaperMC](https://papermc.io/downloads)
+- Compatible with [Java 11+](https://adoptopenjdk.net/)
 - [bStats](https://bstats.org/plugin/bukkit/MultiTime/10918)
