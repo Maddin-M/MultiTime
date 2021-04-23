@@ -5,12 +5,14 @@ package de.maddin.multitime;
  */
 public class Constants {
 
-    private Constants() {}
+    private Constants() {
+    }
 
     public static final String COMMAND = "time";
     public static final int BSTATS_PLUGIN_ID = 10918;
     public static final int SPIGOT_PLUGIN_ID = 90642;
     public static final String SPIGOT_API_LINK = "https://api.spigotmc.org/legacy/update.php?resource=";
+    public static final String ALL_ARG = "all";
 
     /**
      * This enum holds the named time parameters and its values.
@@ -30,13 +32,16 @@ public class Constants {
         }
 
         public static boolean contains(String test) {
-
             for (TimePresets t : TimePresets.values()) {
                 if (t.name().equalsIgnoreCase(test)) {
                     return true;
                 }
             }
             return false;
+        }
+
+        public String getCommand() {
+            return name().toLowerCase();
         }
     }
 }

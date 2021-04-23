@@ -1,6 +1,6 @@
 package commands;
 
-import de.maddin.multitime.commands.Get;
+import de.maddin.multitime.commands.CommandGet;
 import org.bukkit.GameRule;
 import org.bukkit.Server;
 import org.bukkit.World;
@@ -11,9 +11,6 @@ import org.junit.jupiter.api.TestInstance;
 
 import java.util.List;
 
-import static java.lang.String.format;
-import static main.TestUtils.TEST_NAME;
-import static main.TestUtils.TEST_TIME;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -22,23 +19,23 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class GetTest {
+class CommandGetTest {
 
-    private Get getTest;
+    private CommandGet commandGetTest;
     private Player playerMock;
     private World worldMock;
     private Server serverMock;
 
     @BeforeEach
     public void setup() {
-        getTest = new Get();
+        commandGetTest = new CommandGet();
         playerMock = mock(Player.class);
         worldMock = mock(World.class);
         serverMock = mock(Server.class);
         when(playerMock.getServer()).thenReturn(serverMock);
         when(playerMock.getWorld()).thenReturn(worldMock);
-        when(worldMock.getTime()).thenReturn(TEST_TIME);
-        when(worldMock.getName()).thenReturn(TEST_NAME);
+        when(worldMock.getName()).thenReturn("test_world");
+        when(worldMock.getTime()).thenReturn(1234L);
         when(serverMock.getWorlds()).thenReturn(List.of(worldMock, worldMock));
     }
 
@@ -47,15 +44,14 @@ class GetTest {
 
         String[] args = new String[]{"get"};
 
-        boolean result = getTest.run(playerMock, args);
+        boolean result = commandGetTest.run(playerMock, args);
         assertThat(result).isTrue();
 
         verify(playerMock).getWorld();
         verify(worldMock).getTime();
         verify(worldMock).getName();
         verify(worldMock).getGameRuleValue(GameRule.DO_DAYLIGHT_CYCLE);
-        verify(playerMock).sendMessage(
-                format("The time in \u00A7b%s\u00A7f is \u00A7b%d\u00A7f ticks.", TEST_NAME, TEST_TIME));
+        verify(playerMock).sendMessage("The time in \u00A7btest_world \u00A7fis \u00A7b1,234 \u00A7fticks.");
         verifyNoMoreInteractions(playerMock, worldMock, serverMock);
     }
 
@@ -65,7 +61,7 @@ class GetTest {
         String[] args = new String[]{"get"};
         when(worldMock.getGameRuleValue(GameRule.DO_DAYLIGHT_CYCLE)).thenReturn(false);
 
-        boolean result = getTest.run(playerMock, args);
+        boolean result = commandGetTest.run(playerMock, args);
         assertThat(result).isTrue();
 
         verify(playerMock).getWorld();
@@ -73,43 +69,41 @@ class GetTest {
         verify(worldMock).getTime();
         verify(worldMock).getName();
         verify(worldMock).getGameRuleValue(GameRule.DO_DAYLIGHT_CYCLE);
-        verify(playerMock).sendMessage(
-                format("The time in \u00A7b%s\u00A7f is \u00A7b%d\u00A7f ticks. " +
-                        "\u00A7eTime is locked in this world.", TEST_NAME, TEST_TIME));
+        verify(playerMock).sendMessage("The time in \u00A7btest_world \u00A7fis \u00A7b1,234 \u00A7fticks. " +
+                "\u00A7eTime is locked in this world.");
         verifyNoMoreInteractions(playerMock, worldMock, serverMock);
     }
 
     @Test
     void valid_world_parameter_should_give_its_world_time() {
 
-        String[] args = new String[]{"get", TEST_NAME};
-        when(serverMock.getWorld(TEST_NAME)).thenReturn(worldMock);
+        String[] args = new String[]{"get", "test_world"};
+        when(serverMock.getWorld("test_world")).thenReturn(worldMock);
 
-        boolean result = getTest.run(playerMock, args);
+        boolean result = commandGetTest.run(playerMock, args);
         assertThat(result).isTrue();
 
         verify(playerMock).getServer();
-        verify(serverMock).getWorld(TEST_NAME);
+        verify(serverMock).getWorld("test_world");
         verify(worldMock).getTime();
         verify(worldMock).getName();
         verify(worldMock).getGameRuleValue(GameRule.DO_DAYLIGHT_CYCLE);
-        verify(playerMock).sendMessage(
-                format("The time in \u00A7b%s\u00A7f is \u00A7b%d\u00A7f ticks.", TEST_NAME, TEST_TIME));
+        verify(playerMock).sendMessage("The time in \u00A7btest_world \u00A7fis \u00A7b1,234 \u00A7fticks.");
         verifyNoMoreInteractions(playerMock, worldMock, serverMock);
     }
 
     @Test
     void invalid_world_parameter_should_give_error_message() {
 
-        String[] args = new String[]{"get", TEST_NAME};
-        when(serverMock.getWorld(TEST_NAME)).thenReturn(null);
+        String[] args = new String[]{"get", "test_world"};
+        when(serverMock.getWorld("test_world")).thenReturn(null);
 
-        boolean result = getTest.run(playerMock, args);
+        boolean result = commandGetTest.run(playerMock, args);
         assertThat(result).isFalse();
 
         verify(playerMock).getServer();
-        verify(serverMock).getWorld(TEST_NAME);
-        verify(playerMock).sendMessage(format("\u00A7cWorld '%s' doesn't exist!", TEST_NAME));
+        verify(serverMock).getWorld("test_world");
+        verify(playerMock).sendMessage("\u00A7cWorld \u00A74test_world \u00A7cdoesn't exist.");
         verifyNoMoreInteractions(playerMock, worldMock, serverMock);
     }
 
@@ -118,7 +112,7 @@ class GetTest {
 
         String[] args = new String[]{"get", "all"};
 
-        boolean result = getTest.run(playerMock, args);
+        boolean result = commandGetTest.run(playerMock, args);
         assertThat(result).isTrue();
 
         verify(playerMock).getServer();
@@ -126,8 +120,8 @@ class GetTest {
         verify(worldMock, times(2)).getTime();
         verify(worldMock, times(2)).getName();
         verify(worldMock, times(2)).getGameRuleValue(GameRule.DO_DAYLIGHT_CYCLE);
-        verify(playerMock, times(2)).sendMessage(
-                format("The time in \u00A7b%s\u00A7f is \u00A7b%d\u00A7f ticks.", TEST_NAME, TEST_TIME));
+        verify(playerMock, times(2))
+                .sendMessage("The time in \u00A7btest_world \u00A7fis \u00A7b1,234 \u00A7fticks.");
         verifyNoMoreInteractions(playerMock, worldMock, serverMock);
     }
 }

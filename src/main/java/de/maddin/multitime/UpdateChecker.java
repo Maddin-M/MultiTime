@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 import static de.maddin.multitime.Constants.SPIGOT_API_LINK;
 import static de.maddin.multitime.Constants.SPIGOT_PLUGIN_ID;
+import static de.maddin.multitime.utils.StringUtils.getMessage;
 
 /**
  * This class checks for updates once the plugin is started.
@@ -26,7 +27,7 @@ public class UpdateChecker {
     public void checkForUpdate() {
         getVersion(version -> {
             if (!plugin.getDescription().getVersion().equalsIgnoreCase(version)) {
-                Bukkit.getLogger().warning("[MultiTime] There is a new update available!");
+                Bukkit.getLogger().warning(getMessage("console_update_available"));
                 plugin.setUpdateAvailable(true);
             }
         });
@@ -40,7 +41,7 @@ public class UpdateChecker {
                     consumer.accept(scanner.next());
                 }
             } catch (IOException exception) {
-                plugin.getLogger().warning("[MultiTime] Cannot look for updates: " + exception.getMessage());
+                Bukkit.getLogger().warning(getMessage("console_update_fetch_error", exception.getMessage()));
             }
         });
     }
