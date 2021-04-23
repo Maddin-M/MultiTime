@@ -1,3 +1,4 @@
+![](https://raw.githubusercontent.com/Maddin-M/MultiTime/master/icon.png)
 MultiTime ![](https://tokei.rs/b1/github/Maddin-M/MultiTime?category=code) ![](https://img.shields.io/bstats/servers/10918) ![](https://img.shields.io/spiget/downloads/90642)
 =================
 
